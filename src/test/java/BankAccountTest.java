@@ -1,6 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class BankAccountTest {
@@ -41,7 +42,7 @@ public class BankAccountTest {
     void showHistory() {
         BankAccount doe = new BankAccount();
         doe.deposit(23);
-        assertEquals(List.of("DEPOSIT, 18/01/2022, 23e, 23e"), doe.history());
+        assertEquals(List.of("DEPOSIT, 19/01/2022, 23e, 23e"), doe.history());
     }
 
     @Test
@@ -49,10 +50,14 @@ public class BankAccountTest {
         BankAccount doe = new BankAccount();
         doe.deposit(23);
         doe.withdraw(10);
-        /*assertEquals(
-                List.of(
-                        "DEPOSIT, 18/01/2022, 23e, 23e",
-                        "WITHDRAW, 18/01/2022, 10e, 13e"
-                ), doe.history()); */
+        doe.withdraw(10);
+        doe.withdraw(10);
+        assertEquals(Arrays.asList(
+                "DEPOSIT, 19/01/2022, 23e, 23e",
+                "WITHDRAW, 19/01/2022, 10e, 13e",
+                "WITHDRAW, 19/01/2022, 10e, 3e",
+                "WITHDRAW, 19/01/2022, 10e, -7e"
+        ), doe.history());
     }
+
 }
