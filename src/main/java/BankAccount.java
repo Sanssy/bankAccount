@@ -3,12 +3,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class BankAccount {
 
-    private double balance;
-
     private final List<String> statements = new ArrayList<>();
+
+    private double balance;
 
     public BankAccount() {
         balance = 0;
