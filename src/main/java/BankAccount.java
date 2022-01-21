@@ -1,43 +1,37 @@
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class BankAccount {
 
     private final List<String> statements = new ArrayList<>();
 
-    private double balance;
+    private Amount balance;
 
     public BankAccount() {
-        balance = 0;
+        balance = Amount.of(0);
     }
 
-    public double getBalance() {
-        return balance;
-    }
 
-    public double deposit(double amount) {
+    public String deposit(Amount amount, Date date) {
         String operation = "DEPOSIT";
-        balance += amount;
-        statements.add(recordTransaction(amount, operation));
-        return balance;
+        return recordTransaction(amount, date, operation);
     }
 
-    public double withdraw(double amount) {
-        String operation = "WITHDRAW";
-        balance -= amount;
-        statements.add(recordTransaction(amount, operation));
-        return balance;
+    public String withdraw(Amount amount, Date date) {
+        String operation = "WITHDRAWAL";
+        return recordTransaction(amount, date, operation);
     }
 
-    public String recordTransaction(double amount, String operation) {
-        double updatedBalance = balance;
-        String d = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-        String formattedAmount = new DecimalFormat("#.##").format(amount);
-        String formattedBalance = new DecimalFormat("#.##").format(updatedBalance);
+    public String recordTransaction(Amount amount, Date date, String operation) {
+        Transaction t = new Transaction(date, amount);
+        Amount updatedBalance = t.updateBalance(balance);
+        balance = updatedBalance;
+
+        String d = new SimpleDateFormat("dd/MM/yyyy").format(date);
+        String formattedAmount = amount.decimalFormat();
+        String formattedBalance = updatedBalance.decimalFormat();
         return operation + ", " + d + ", " + formattedAmount + "e, " + formattedBalance + "e";
     }
 
