@@ -9,6 +9,11 @@ public class AmountTest {
     }
 
     @Test
+    void negativeAmount() {
+        assertEquals(Amount.of(-100), Amount.negative(100));
+    }
+
+    @Test
     void addAmount() {
         Amount one = Amount.of(1);
         Amount anotherOne = Amount.of(1);

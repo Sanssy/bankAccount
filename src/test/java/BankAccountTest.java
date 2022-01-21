@@ -6,11 +6,6 @@ import java.util.List;
 
 public class BankAccountTest {
 
-  /*  @Test
-    void initAccount() {
-        assertEquals(0, new BankAccount().getBalance());
-    } */
-
     @Test
     void makeADeposit() {
         assertEquals(1, new BankAccount().deposit(1));
@@ -42,7 +37,7 @@ public class BankAccountTest {
     void showHistory() {
         BankAccount doe = new BankAccount();
         doe.deposit(23);
-        assertEquals(List.of("DEPOSIT, 20/01/2022, 23e, 23e"), doe.history());
+        assertEquals(List.of("DEPOSIT, 21/01/2022, 23e, 23e"), doe.history());
     }
 
     @Test
@@ -53,10 +48,10 @@ public class BankAccountTest {
         doe.withdraw(10);
         doe.withdraw(10);
         assertEquals(Arrays.asList(
-                "DEPOSIT, 20/01/2022, 23e, 23e",
-                "WITHDRAW, 20/01/2022, 10e, 13e",
-                "WITHDRAW, 20/01/2022, 10e, 3e",
-                "WITHDRAW, 20/01/2022, 10e, -7e"
+                "DEPOSIT, 21/01/2022, 23e, 23e",
+                "WITHDRAW, 21/01/2022, 10e, 13e",
+                "WITHDRAW, 21/01/2022, 10e, 3e",
+                "WITHDRAW, 21/01/2022, 10e, -7e"
         ), doe.history());
     }
 

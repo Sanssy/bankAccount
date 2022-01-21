@@ -19,6 +19,10 @@ public class Amount {
         return new Amount(value);
     }
 
+    public static Amount negative(double value) {
+        return new Amount(-value);
+    }
+
     public Amount add(Amount amount) {
         return new Amount(value + amount.value);
     }
@@ -40,8 +44,4 @@ public class Amount {
         return Double.compare(amount.value, value) == 0 && Objects.equals(locale, amount.locale) && Objects.equals(decimalFormat, amount.decimalFormat);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(locale, decimalFormat, value);
-    }
 }
