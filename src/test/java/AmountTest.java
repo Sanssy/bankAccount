@@ -28,10 +28,12 @@ public class AmountTest {
         Amount one = Amount.of(1);
         assertEquals(one, three.subtract(two));
     }
-
     @Test
     void decimalFormat() {
         Amount ten = Amount.of(10);
         assertEquals("10.00", ten.decimalFormat());
+
+        Amount nTen = Amount.negative(10);
+        assertEquals("-10.00", nTen.decimalFormat());
     }
 }

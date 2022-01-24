@@ -37,34 +37,37 @@ public class BankAccountTest {
 
         Amount thirty_three = Amount.negative(33);
 
-        assertEquals("WITHDRAWAL, 20/01/2022, 33.00e, 32.00e", bart.withdraw(thirty_three, date));
+        assertEquals("WITHDRAWAL, 20/01/2022, -33.00e, 32.00e", bart.withdraw(thirty_three, date));
     }
 
     @Test
     void makeMultipleWithdraw() throws ParseException {
+        BankAccount joe = new BankAccount();
         Date date = convertToDate("21/01/2022");
         Amount sixty_five = Amount.of(65);
-        BankAccount joe = new BankAccount();
         joe.deposit(sixty_five, date);
 
         Amount nThirty_three = Amount.negative(33);
-        assertEquals("WITHDRAWAL, 21/01/2022, 33.00e, 32.00e", joe.withdraw(nThirty_three, date));
+        assertEquals("WITHDRAWAL, 21/01/2022, -33.00e, 32.00e", joe.withdraw(nThirty_three, date));
 
         Amount nTwelve = Amount.negative(12);
-        assertEquals("WITHDRAWAL, 21/01/2022, 20.00e, 12.00e", joe.withdraw(nTwelve, date));
+        assertEquals("WITHDRAWAL, 21/01/2022, -12.00e, 20.00e", joe.withdraw(nTwelve, date));
     }
 
     private Date convertToDate(String stringDate) throws ParseException {
         return new SimpleDateFormat("dd/MM/yyyy").parse(stringDate);
     }
-//
-//    @Test
-//    void showHistory() {
-//        BankAccount doe = new BankAccount();
-//        doe.deposit(23);
-//        assertEquals(List.of("DEPOSIT, 21/01/2022, 23e, 23e"), doe.history());
-//    }
-//
+
+    @Test
+    void showHistory() throws ParseException {
+        BankAccount doe = new BankAccount();
+        Amount twenty_three = Amount.of(23);
+        Date date = convertToDate("22/01/2022");
+
+        doe.deposit(twenty_three, date);
+        assertEquals(List.of("DEPOSIT, 22/01/2022, 23.00e, 23.00e"), doe.history());
+    }
+
 //    @Test
 //    void showSeveralOperationHistory() {
 //        BankAccount doe = new BankAccount();

@@ -43,5 +43,4 @@ public class Amount {
         if (!(o instanceof Amount amount)) return false;
         return Double.compare(amount.value, value) == 0 && Objects.equals(locale, amount.locale) && Objects.equals(decimalFormat, amount.decimalFormat);
     }
-
 }

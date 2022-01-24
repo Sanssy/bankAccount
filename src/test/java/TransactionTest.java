@@ -18,9 +18,9 @@ public class TransactionTest {
     @Test
     void showAWithdrawal() throws ParseException {
         Date withDrawDate = convertToDate("12/01/2022");
-        Transaction withdraw = new Transaction(withDrawDate, Amount.of(100));
+        Transaction withdraw = new Transaction(withDrawDate, Amount.negative(100));
 
-        assertEquals("12/01/2022, 100.00, -100.00", withdraw.view(Amount.negative(100)));
+        assertEquals("12/01/2022, -100.00, -100.00", withdraw.view(Amount.negative(100)));
     }
 
     @Test
