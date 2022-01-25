@@ -14,7 +14,7 @@ public class BankAccountTest {
         Date date = convertToDate("11/01/2022");
         Amount one = Amount.of(1);
         BankAccount john = new BankAccount();
-        assertEquals("DEPOSIT, 11/01/2022, 1.00e, 1.00e", john.deposit(one, date));
+        assertEquals("DEPOSIT, 11/01/2022, 1.00, 1.00", john.deposit(one, date));
     }
 
     @Test
@@ -23,9 +23,9 @@ public class BankAccountTest {
         Amount one = Amount.of(1);
 
         BankAccount eddie = new BankAccount();
-        assertEquals("DEPOSIT, 18/01/2022, 1.00e, 1.00e", eddie.deposit(one, date));
+        assertEquals("DEPOSIT, 18/01/2022, 1.00, 1.00", eddie.deposit(one, date));
 
-        assertEquals("DEPOSIT, 18/01/2022, 1.00e, 2.00e", eddie.deposit(one, date));
+        assertEquals("DEPOSIT, 18/01/2022, 1.00, 2.00", eddie.deposit(one, date));
     }
 
     @Test
@@ -33,11 +33,12 @@ public class BankAccountTest {
         Date date = convertToDate("20/01/2022");
         Amount sixty_five = Amount.of(65);
         BankAccount bart = new BankAccount();
-        bart.deposit(sixty_five, date);
 
-        Amount thirty_three = Amount.negative(33);
+        assertEquals("DEPOSIT, 20/01/2022, 65.00, 65.00", bart.deposit(sixty_five, date));
 
-        assertEquals("WITHDRAWAL, 20/01/2022, -33.00e, 32.00e", bart.withdraw(thirty_three, date));
+        Amount thirty_three = Amount.of(33);
+
+        assertEquals("WITHDRAWAL, 20/01/2022, 33.00, 32.00", bart.withdraw(thirty_three, date));
     }
 
     @Test
@@ -47,11 +48,11 @@ public class BankAccountTest {
         Amount sixty_five = Amount.of(65);
         joe.deposit(sixty_five, date);
 
-        Amount nThirty_three = Amount.negative(33);
-        assertEquals("WITHDRAWAL, 21/01/2022, -33.00e, 32.00e", joe.withdraw(nThirty_three, date));
+        Amount nThirty_three = Amount.of(33);
+        assertEquals("WITHDRAWAL, 21/01/2022, 33.00, 32.00", joe.withdraw(nThirty_three, date));
 
-        Amount nTwelve = Amount.negative(12);
-        assertEquals("WITHDRAWAL, 21/01/2022, -12.00e, 20.00e", joe.withdraw(nTwelve, date));
+        Amount nTwelve = Amount.of(12);
+        assertEquals("WITHDRAWAL, 21/01/2022, 12.00, 20.00", joe.withdraw(nTwelve, date));
     }
 
     private Date convertToDate(String stringDate) throws ParseException {
@@ -65,7 +66,7 @@ public class BankAccountTest {
         Date date = convertToDate("22/01/2022");
 
         doe.deposit(twenty_three, date);
-        assertEquals(List.of("DEPOSIT, 22/01/2022, 23.00e, 23.00e"), doe.history());
+        assertEquals(List.of("DEPOSIT, 22/01/2022, 23.00, 23.00"), doe.history());
     }
 
 //    @Test

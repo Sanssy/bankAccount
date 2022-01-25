@@ -8,32 +8,41 @@ public class Transaction {
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_STANDARD_FORMAT);
 
+    private final OperationType operation;
+
     private final Date date;
 
     private final Amount amount;
 
-    public Transaction(Date date, Amount amount) {
+    public Transaction(Date date, Amount amount, OperationType operation) {
         this.date = date;
         this.amount = amount;
+        this.operation = operation;
     }
 
     public String view(Amount currentBalance) {
         String separator = ", ";
-        return dateFormat.format(date) +
+        return operation +
+                separator +
+                dateFormat.format(date) +
                 separator +
                 amount.decimalFormat() +
                 separator +
                 currentBalance.decimalFormat();
     }
 
-    public Amount updateBalance(Amount amount) {
-        return this.amount.add(amount);
+    public Amount updateBalance(Amount balance, OperationType operation) {
+        return switch (operation) {
+            case DEPOSIT -> balance.add(this.amount);
+            case WITHDRAWAL -> balance.subtract(this.amount);
+        };
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Transaction that)) return false;
-        return Objects.equals(date, that.date) && Objects.equals(amount, that.amount);
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return Objects.equals(dateFormat, that.dateFormat) && operation == that.operation && Objects.equals(date, that.date) && Objects.equals(amount, that.amount);
     }
 }

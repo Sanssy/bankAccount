@@ -40,7 +40,13 @@ public class Amount {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Amount amount)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+        Amount amount = (Amount) o;
         return Double.compare(amount.value, value) == 0 && Objects.equals(locale, amount.locale) && Objects.equals(decimalFormat, amount.decimalFormat);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(locale, decimalFormat, value);
     }
 }

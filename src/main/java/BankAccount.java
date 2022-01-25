@@ -1,4 +1,3 @@
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,26 +13,18 @@ public class BankAccount {
     }
 
     public String deposit(Amount amount, Date date) {
-        String operation = "DEPOSIT";
-        return recordTransaction(date, amount, operation);
+        return recordTransaction(date, amount, OperationType.DEPOSIT);
     }
 
     public String withdraw(Amount amount, Date date) {
-        String operation = "WITHDRAWAL";
-        return recordTransaction(date, amount, operation);
+        return recordTransaction(date, amount, OperationType.WITHDRAWAL);
     }
 
-    public String recordTransaction(Date date, Amount amount, String operation) {
-        Transaction t = new Transaction(date, amount);
-        Amount updatedBalance = t.updateBalance(balance);
+    public String recordTransaction(Date date, Amount amount, OperationType operation) {
+        Transaction transaction = new Transaction(date, amount, operation);
+        Amount updatedBalance = transaction.updateBalance(balance, operation);
         balance = updatedBalance;
-        
-        String d = new SimpleDateFormat("dd/MM/yyyy").format(date);
-        String formattedAmount = amount.decimalFormat();
-        String formattedBalance = updatedBalance.decimalFormat();
-        String statement = operation + ", " + d + ", " + formattedAmount + "e, " + formattedBalance + "e";
-        statements.add(statement);
-        return statement;
+        return transaction.view(updatedBalance);
     }
 
     public List<String> history() {

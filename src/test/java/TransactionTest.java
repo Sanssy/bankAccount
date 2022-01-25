@@ -10,25 +10,26 @@ public class TransactionTest {
     @Test
     void showADeposit() throws ParseException {
         Date depositDate = convertToDate("11/01/2022");
-        Transaction deposit = new Transaction(depositDate, Amount.of(100));
+        Transaction deposit = new Transaction(depositDate, Amount.of(100), OperationType.DEPOSIT);
 
-        assertEquals("11/01/2022, 100.00, 100.00", deposit.view(Amount.of(100)));
+        assertEquals("DEPOSIT, 11/01/2022, 100.00, 100.00", deposit.view(Amount.of(100)));
     }
 
     @Test
     void showAWithdrawal() throws ParseException {
         Date withDrawDate = convertToDate("12/01/2022");
-        Transaction withdraw = new Transaction(withDrawDate, Amount.negative(100));
+        Transaction transaction = new Transaction(withDrawDate, Amount.negative(100), OperationType.WITHDRAWAL);
 
-        assertEquals("12/01/2022, -100.00, -100.00", withdraw.view(Amount.negative(100)));
+        assertEquals("WITHDRAWAL, 12/01/2022, -100.00, -100.00", transaction.view(Amount.negative(100)));
     }
 
     @Test
     void updateBalanceAfterDeposit() throws ParseException {
         Date depositDate = convertToDate("14/01/2022");
-        Transaction deposit = new Transaction(depositDate, Amount.of(1100));
+        OperationType deposit = OperationType.DEPOSIT;
+        Transaction transaction = new Transaction(depositDate, Amount.of(1100), deposit);
 
-        Amount currentBalance = deposit.updateBalance(Amount.of(200));
+        Amount currentBalance = transaction.updateBalance(Amount.of(200), deposit);
 
         assertEquals(Amount.of(1300), currentBalance);
     }
@@ -36,9 +37,10 @@ public class TransactionTest {
     @Test
     void updateBalanceAfterWithdrawal() throws ParseException {
         Date withdrawalDate = convertToDate("14/01/2022");
-        Transaction withdrawal = new Transaction(withdrawalDate, Amount.of(1000));
+        OperationType withdrawal = OperationType.WITHDRAWAL;
+        Transaction transaction = new Transaction(withdrawalDate, Amount.of(400), withdrawal);
 
-        Amount currentBalance = withdrawal.updateBalance(Amount.negative(400));
+        Amount currentBalance = transaction.updateBalance(Amount.of(1000), withdrawal);
 
         assertEquals(Amount.of(600), currentBalance);
     }
