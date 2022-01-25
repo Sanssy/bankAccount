@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -24,10 +25,13 @@ public class BankAccount {
         Transaction transaction = new Transaction(date, amount, operation);
         Amount updatedBalance = transaction.updateBalance(balance, operation);
         balance = updatedBalance;
+        statements.add(transaction.view(updatedBalance));
         return transaction.view(updatedBalance);
     }
 
     public List<String> history() {
+        Collections.reverse(statements);
         return statements;
+
     }
 }

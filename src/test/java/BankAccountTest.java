@@ -69,19 +69,22 @@ public class BankAccountTest {
         assertEquals(List.of("DEPOSIT, 22/01/2022, 23.00, 23.00"), doe.history());
     }
 
-//    @Test
-//    void showSeveralOperationHistory() {
-//        BankAccount doe = new BankAccount();
-//        doe.deposit(23);
-//        doe.withdraw(10);
-//        doe.withdraw(10);
-//        doe.withdraw(10);
-//        assertEquals(Arrays.asList(
-//                "DEPOSIT, 21/01/2022, 23e, 23e",
-//                "WITHDRAW, 21/01/2022, 10e, 13e",
-//                "WITHDRAW, 21/01/2022, 10e, 3e",
-//                "WITHDRAW, 21/01/2022, 10e, -7e"
-//        ), doe.history());
-//    }
+    @Test
+    void showSeveralOperationHistory() throws ParseException {
+        BankAccount jane = new BankAccount();
+        Date date = convertToDate("21/01/2022");
+        Amount twenty_three = Amount.of(23);
+        Amount ten = Amount.of(10);
+        jane.deposit(twenty_three, date);
+        jane.withdraw(ten, date);
+        jane.withdraw(ten, date);
+        jane.withdraw(ten, date);
+        assertEquals(Arrays.asList(
+                "WITHDRAWAL, 21/01/2022, 10.00, -7.00",
+                "WITHDRAWAL, 21/01/2022, 10.00, 3.00",
+                "WITHDRAWAL, 21/01/2022, 10.00, 13.00",
+                "DEPOSIT, 21/01/2022, 23.00, 23.00"
+                ), jane.history());
+    }
 
 }
